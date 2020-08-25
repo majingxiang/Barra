@@ -12,19 +12,24 @@ PATH = "C:\\Users\\tjmaj\\Desktop\\Barra\\Data"  # Change the path here
 price = pd.read_csv(PATH + "\\price1.csv")
 fundamental = pd.read_csv(PATH + "\\fundamental1.csv")
 
-rets = price.pivot_table(columns=["ticker"], index="date").pct_change()
-rets = rets.droplevel(axis=1, level=0)
-rets = rets.dropna(how="all")
-
-# refine the equity universe: remove equity with
-
+# get returns
+rets = price_to_rets(price[["date", "ticker", "close"]])
 # get industry dummy variable
+industry_dummy = dummy(price[["industry", "ticker"]])
+
+# Fill missing value
+fill = NA(rets)
+fill.drop(0.4)
+rets = fill.data
+
+# winsorize
+lb, ub = 0.01, 0.99
+fundamental_winsorize = winsorize(fundamental, lb=lb, ub=ub)
+rets = winsorize(rets, lb=lb, ub=ub)
 
 # zscore
 
 # validate
-
-
 
 
 if __name__ == "__main__":

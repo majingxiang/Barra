@@ -48,13 +48,52 @@ def winsorize(df: pd.DataFrame, lb=0.05, ub=0.95):
     return df.clip(lower, upper, axis=0)
 
 
-def zscore():
+def zscore(df: pd.DataFrame):
+    score = (df - df.mean()) / df.std()
+
+    return score
+
+
+def validate(X, y):
+    """  """
+
+    X.isna().sum().max() == 0
+
     return
 
 
 def factor_combine():
+    """
+    weighted average different theme factors like value and carry
+    e.g. Value = 0.3 * BP + 0.5 * EP + 0.5 * FCF/P
+    """
+
     return
 
 
-def preprocessing():
-    return
+class NA:
+
+    def __init__(self, data: pd.DataFrame):
+        self._data = data
+
+    def drop(self, threshold=0.4):
+        n = len(self._data)
+        mask = self._data.isna().sum() > n * threshold
+        selected = [idx for idx, e in mask.iteritems()]
+        self._data = self._data[selected]
+        return
+
+    @classmethod
+    def rf_fill(self, ):
+        """random forest"""
+        return
+
+    @classmethod
+    def em_fill(self):
+        """ expectation maximization (which is used by Barra)"""
+
+        return
+
+    @property
+    def data(self):
+        return self._data

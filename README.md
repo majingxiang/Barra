@@ -1,5 +1,5 @@
 # Barra
-Replicate Barra model in China A share market
+A light Barra Risk Model Toolkit for China A share market
 
 ## Data
 

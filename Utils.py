@@ -1,10 +1,19 @@
 from functools import wraps
 import time
 from loguru import logger
+from prettytable import PrettyTable
 
 
 class MatrixError(Exception):
     pass
+
+
+def format_for_print(df):
+    """transform Data Frame to pretty table"""
+    table = PrettyTable([''] + list(df.columns))
+    for row in df.itertuples():
+        table.add_row(row)
+    return table
 
 
 def timeit(f):
@@ -21,12 +30,8 @@ def timeit(f):
     return wrapper
 
 
-def fill_na():
-    return
-
-
 def is_psd():
-    """is positive semi-definite"""
+    """Is positive semi-definite"""
 
     return
 
@@ -38,10 +43,6 @@ def is_singular(x):
     else:
         raise MatrixError("More parameters than observations")
 
-    return
-
-
-def validate():
     return
 
 
